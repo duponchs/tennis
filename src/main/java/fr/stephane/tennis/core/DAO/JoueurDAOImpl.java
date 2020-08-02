@@ -20,7 +20,7 @@ public class JoueurDAOImpl {
             dataSource.setInitialSize(5); //5 connexions sont ouvertes pour notre projet et mi dans le pool
             dataSource.setUrl("jdbc:mysql://localhost:3306/tennis?useSSL=false&useLegacyDatetimeCode=false&serverTimezone=Europe/Paris");
             dataSource.setUsername("root");
-            dataSource.setPassword("");
+            dataSource.setPassword("root");
             con = dataSource.getConnection();
 
             PreparedStatement preparedStatement  = con.prepareStatement("INSERT TO JOUEUR (NOM,PRENOM,SEXE) VALUES (NOM=?,PRENOM=?,SEXE=?)");
@@ -56,7 +56,7 @@ public class JoueurDAOImpl {
             dataSource.setInitialSize(5); //5 connexions sont ouvertes pour notre projet et mi dans le pool
             dataSource.setUrl("jdbc:mysql://localhost:3306/tennis?useSSL=false&useLegacyDatetimeCode=false&serverTimezone=Europe/Paris");
             dataSource.setUsername("root");
-            dataSource.setPassword("");
+            dataSource.setPassword("root");
             con = dataSource.getConnection();
 
             PreparedStatement preparedStatement  = con.prepareStatement("SELECT NOM,PRENOM,SEXE FROM JOUEUR WHERE ID=?");
@@ -99,7 +99,7 @@ public class JoueurDAOImpl {
             dataSource.setInitialSize(5); //5 connexions sont ouvertes pour notre projet et mi dans le pool
             dataSource.setUrl("jdbc:mysql://localhost:3306/tennis?useSSL=false&useLegacyDatetimeCode=false&serverTimezone=Europe/Paris");
             dataSource.setUsername("root");
-            dataSource.setPassword("");
+            dataSource.setPassword("root");
             con = dataSource.getConnection();
 
             PreparedStatement preparedStatement  = con.prepareStatement("SELECT ID,NOM,PRENOM,SEXE FROM JOUEUR ");
@@ -140,7 +140,7 @@ public class JoueurDAOImpl {
             dataSource.setInitialSize(5); //5 connexions sont ouvertes pour notre projet et mi dans le pool
             dataSource.setUrl("jdbc:mysql://localhost:3306/tennis?useSSL=false&useLegacyDatetimeCode=false&serverTimezone=Europe/Paris");
             dataSource.setUsername("root");
-            dataSource.setPassword("");
+            dataSource.setPassword("root");
             con = dataSource.getConnection();
 
             PreparedStatement preparedStatement  = con.prepareStatement("UPDATE  JOUEUR SET NOM=?,PRENOM=?,SEXE=? WHERE ID=?");
@@ -177,7 +177,7 @@ public class JoueurDAOImpl {
             dataSource.setInitialSize(5); //5 connexions sont ouvertes pour notre projet et mi dans le pool
             dataSource.setUrl("jdbc:mysql://localhost:3306/tennis?useSSL=false&useLegacyDatetimeCode=false&serverTimezone=Europe/Paris");
             dataSource.setUsername("root");
-            dataSource.setPassword("");
+            dataSource.setPassword("root");
             con = dataSource.getConnection();
 
             PreparedStatement preparedStatement  = con.prepareStatement("DELETE FROM JOUEUR WHERE ID=?");

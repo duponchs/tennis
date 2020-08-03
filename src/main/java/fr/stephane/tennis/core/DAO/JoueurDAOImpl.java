@@ -1,12 +1,10 @@
 package fr.stephane.tennis.core.DAO;
 
+import fr.stephane.tennis.core.DataSourceProvider;
 import fr.stephane.tennis.core.entity.Joueur;
-import org.apache.commons.dbcp2.BasicDataSource;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import javax.sql.DataSource;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,20 +14,23 @@ public class JoueurDAOImpl {
         Connection con = null;
         try {
 
-            BasicDataSource dataSource = new BasicDataSource();
-            dataSource.setInitialSize(5); //5 connexions sont ouvertes pour notre projet et mi dans le pool
-            dataSource.setUrl("jdbc:mysql://localhost:3306/tennis?useSSL=false&useLegacyDatetimeCode=false&serverTimezone=Europe/Paris");
-            dataSource.setUsername("root");
-            dataSource.setPassword("root");
+            DataSource dataSource = DataSourceProvider.getSingleDataSourceInstance();
+
             con = dataSource.getConnection();
 
-            PreparedStatement preparedStatement  = con.prepareStatement("INSERT TO JOUEUR (NOM,PRENOM,SEXE) VALUES (NOM=?,PRENOM=?,SEXE=?)");
+            PreparedStatement preparedStatement  = con.prepareStatement("INSERT INTO JOUEUR (NOM,PRENOM,SEXE) VALUES (?,?,?)", Statement.RETURN_GENERATED_KEYS);
 
             preparedStatement.setString(1,joueur.getNom());
             preparedStatement.setString(2, joueur.getPrenom());
             preparedStatement.setString(3,(joueur.getSexe()).toString());
 
             preparedStatement.executeUpdate(); // retourne le nombre d'élement, mise a jour
+
+            ResultSet rs = preparedStatement.getGeneratedKeys(); // permet de retourner toutes les valeurs auto générer
+
+            if ( rs.next()){
+                joueur.setId(rs.getLong(1));
+            }
 
             System.out.println("Joueur crée");
 
@@ -52,11 +53,7 @@ public class JoueurDAOImpl {
         Connection con = null;
         try {
 
-            BasicDataSource dataSource = new BasicDataSource();
-            dataSource.setInitialSize(5); //5 connexions sont ouvertes pour notre projet et mi dans le pool
-            dataSource.setUrl("jdbc:mysql://localhost:3306/tennis?useSSL=false&useLegacyDatetimeCode=false&serverTimezone=Europe/Paris");
-            dataSource.setUsername("root");
-            dataSource.setPassword("root");
+            DataSource dataSource = DataSourceProvider.getSingleDataSourceInstance();
             con = dataSource.getConnection();
 
             PreparedStatement preparedStatement  = con.prepareStatement("SELECT NOM,PRENOM,SEXE FROM JOUEUR WHERE ID=?");
@@ -95,11 +92,7 @@ public class JoueurDAOImpl {
         Connection con = null;
         try {
 
-            BasicDataSource dataSource = new BasicDataSource();
-            dataSource.setInitialSize(5); //5 connexions sont ouvertes pour notre projet et mi dans le pool
-            dataSource.setUrl("jdbc:mysql://localhost:3306/tennis?useSSL=false&useLegacyDatetimeCode=false&serverTimezone=Europe/Paris");
-            dataSource.setUsername("root");
-            dataSource.setPassword("root");
+            DataSource dataSource = DataSourceProvider.getSingleDataSourceInstance();
             con = dataSource.getConnection();
 
             PreparedStatement preparedStatement  = con.prepareStatement("SELECT ID,NOM,PRENOM,SEXE FROM JOUEUR ");
@@ -136,11 +129,7 @@ public class JoueurDAOImpl {
         Connection con = null;
         try {
 
-            BasicDataSource dataSource = new BasicDataSource();
-            dataSource.setInitialSize(5); //5 connexions sont ouvertes pour notre projet et mi dans le pool
-            dataSource.setUrl("jdbc:mysql://localhost:3306/tennis?useSSL=false&useLegacyDatetimeCode=false&serverTimezone=Europe/Paris");
-            dataSource.setUsername("root");
-            dataSource.setPassword("root");
+            DataSource dataSource = DataSourceProvider.getSingleDataSourceInstance();
             con = dataSource.getConnection();
 
             PreparedStatement preparedStatement  = con.prepareStatement("UPDATE  JOUEUR SET NOM=?,PRENOM=?,SEXE=? WHERE ID=?");
@@ -173,11 +162,7 @@ public class JoueurDAOImpl {
         Connection con = null;
         try {
 
-            BasicDataSource dataSource = new BasicDataSource();
-            dataSource.setInitialSize(5); //5 connexions sont ouvertes pour notre projet et mi dans le pool
-            dataSource.setUrl("jdbc:mysql://localhost:3306/tennis?useSSL=false&useLegacyDatetimeCode=false&serverTimezone=Europe/Paris");
-            dataSource.setUsername("root");
-            dataSource.setPassword("root");
+            DataSource dataSource = DataSourceProvider.getSingleDataSourceInstance();
             con = dataSource.getConnection();
 
             PreparedStatement preparedStatement  = con.prepareStatement("DELETE FROM JOUEUR WHERE ID=?");

@@ -1,7 +1,10 @@
 package fr.stephane.tennis.core.DAO;
 
 import fr.stephane.tennis.core.DataSourceProvider;
+import fr.stephane.tennis.core.HibernateUtil;
+import fr.stephane.tennis.core.entity.Epreuve;
 import fr.stephane.tennis.core.entity.Match;
+import org.hibernate.Session;
 
 
 import javax.sql.DataSource;
@@ -44,5 +47,15 @@ public class MatchDAOImpl {
                 e.printStackTrace();
             }
         }
+    }
+    public Match getById(Long id) {
+        Match match= null;
+        Session session = null;
+
+        session = HibernateUtil.getSessionFactory().openSession();
+        match = session.get(Match.class,id);
+        System.out.println("match lu");
+
+        return match;
     }
 }

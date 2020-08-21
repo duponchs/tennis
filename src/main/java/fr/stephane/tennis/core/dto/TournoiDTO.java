@@ -1,19 +1,17 @@
-package fr.stephane.tennis.core.entity;
+package fr.stephane.tennis.core.dto;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
-@Entity
-public class Tournoi {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class TournoiDTO {
+
     Long id;
-
-    @Column(name = "NOM")
     String nom;
-    @Column(name = "CODE")
     String code;
 
-    public Tournoi() {
+    public TournoiDTO() {
     }
 
     public Long getId() {

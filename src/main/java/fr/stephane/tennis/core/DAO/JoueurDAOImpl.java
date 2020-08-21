@@ -13,45 +13,46 @@ import java.util.List;
 
 public class JoueurDAOImpl {
 
-    public void create(Joueur joueur){
-        Session session = null;
-        Transaction transaction = null;
-        try {
-            session = HibernateUtil.getSessionFactory().openSession();
-            transaction = session.beginTransaction();
-            session.persist(joueur);
-            transaction.commit();
-            System.out.println("Joueur crée");
+//    public void renomme(Long id, String nouveauNom){
+//        Joueur joueur = null;
+//        Session session = null;
+//        Transaction transaction = null;
+//        try {
+//
+//            session = HibernateUtil.getSessionFactory().openSession();
+//            transaction = session.beginTransaction();
+//            joueur = session.get(Joueur.class,id);
+//            joueur.setNom(nouveauNom);
+//            transaction.commit();
+//            System.out.println("nom du joueur modifié");
+//
+//        }catch (Exception e){
+//            if (transaction !=null){
+//                transaction.rollback();
+//            }
+//            e.printStackTrace();
+//        }
+//        finally {
+//            if(session != null){
+//                session.close();
+//            }
+//        }
+//    }
 
-        } catch (Exception e){
-            if (transaction !=null){
-                transaction.rollback();
-            }
-            e.printStackTrace();
-        }
-        finally {
-            if(session != null){
-                session.close();
-            }
-        }
+    public void create(Joueur joueur){
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        session.persist(joueur);
+        System.out.println("Joueur crée");
     }
 
     public Joueur getById(Long id) {
         Joueur joueur = null;
         Session session = null;
-        try {
-            session = HibernateUtil.getSessionFactory().openSession();
-            joueur = session.get(Joueur.class,id);
-            System.out.println("Joueur lu");
 
-        }catch (Throwable t){
-            t.printStackTrace();
-        }
-        finally {
-            if(session != null){
-                session.close();
-            }
-        }
+        session = HibernateUtil.getSessionFactory().getCurrentSession();
+        joueur = session.get(Joueur.class,id);
+        System.out.println("Joueur lu");
+
         return joueur;
     }
 
@@ -93,66 +94,11 @@ public class JoueurDAOImpl {
         return desJoueurs;
     }
 
-    public void update(Joueur joueur){
-        Connection con = null;
-        try {
-
-            DataSource dataSource = DataSourceProvider.getSingleDataSourceInstance();
-            con = dataSource.getConnection();
-
-            PreparedStatement preparedStatement  = con.prepareStatement("UPDATE  JOUEUR SET NOM=?,PRENOM=?,SEXE=? WHERE ID=?");
-
-            preparedStatement.setString(1,joueur.getNom());
-            preparedStatement.setString(2, joueur.getPrenom());
-            preparedStatement.setString(3,(joueur.getSexe()).toString());
-            preparedStatement.setLong(4,joueur.getId());
-
-            preparedStatement.executeUpdate(); // retourne le nombre d'élement, mise a jour
-
-            System.out.println("Joueur modifié");
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        finally {
-            try {
-                if (con!=null) {
-                    con.close();
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-
-    }
-
     public void delete(Long id){
-        Connection con = null;
-        try {
-
-            DataSource dataSource = DataSourceProvider.getSingleDataSourceInstance();
-            con = dataSource.getConnection();
-
-            PreparedStatement preparedStatement  = con.prepareStatement("DELETE FROM JOUEUR WHERE ID=?");
-
-            preparedStatement.setLong(1,id);
-
-            preparedStatement.executeUpdate(); // retourne le nombre d'élement, mise a jour
-
-            System.out.println("Joueur supprimé");
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        finally {
-            try {
-                if (con!=null) {
-                    con.close();
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        Joueur joueur = getById(id);
+        session.delete(joueur);
+        System.out.println("Joueur supprimé");
     }
 
 }

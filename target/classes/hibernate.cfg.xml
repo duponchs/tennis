@@ -25,10 +25,9 @@
 
         <!-- Set the current session context -->
 		<property name="current_session_context_class">thread</property>
+
 		<!-- Set the cache provider -->
-        <property name="cache.provider_class">
-            org.hibernate.cache.internal.NoCachingRegionFactory
-		</property>
+        <property name="cache.provider_class">org.hibernate.cache.internal.NoCachingRegionFactory</property>
 
         <!-- Drop and re-create the database schema on startup -->
         <property name="hbm2ddl.auto">validate</property>
@@ -37,6 +36,9 @@
 		<!-- Enities to map -->
         <mapping class="fr.stephane.tennis.core.entity.Joueur"/>
 		<mapping class="fr.stephane.tennis.core.entity.Tournoi"/>
+        <mapping class="fr.stephane.tennis.core.entity.Epreuve"/>
+        <mapping class="fr.stephane.tennis.core.entity.Score"/>
+        <mapping class="fr.stephane.tennis.core.entity.Match"/>
 
     </session-factory>
 

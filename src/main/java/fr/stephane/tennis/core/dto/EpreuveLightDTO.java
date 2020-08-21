@@ -1,17 +1,15 @@
-package fr.stephane.tennis.core.entity;
+package fr.stephane.tennis.core.dto;
 
-import javax.persistence.*;
 
-@Entity
-public class Epreuve {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+import fr.stephane.tennis.core.entity.Tournoi;
+
+
+public class EpreuveLightDTO {
+
     private Long id;
     private Short annee;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ID_TOURNOI")
-    private Tournoi tournoi;
-    @Column(name = "TYPE_EPREUVE")
+
+
     private Character typeEpreuve;
 
     public Long getId() {
@@ -28,14 +26,6 @@ public class Epreuve {
 
     public void setAnnee(Short annee) {
         this.annee = annee;
-    }
-
-    public Tournoi getTournoi() {
-        return tournoi;
-    }
-
-    public void setTournoi(Tournoi tournoi) {
-        this.tournoi = tournoi;
     }
 
     public Character getTypeEpreuve() {
